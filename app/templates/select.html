@@ -1,0 +1,183 @@
+
+<html>
+<head>
+<link href="http://cdn.bootcss.com/twitter-bootstrap/2.0.4/css/bootstrap.min.css" rel="stylesheet">
+</head>
+  <h1> hello,{{ name }}! </h1>
+  <form class="form-horizontal" method="post" action="">
+    <fieldset>
+      <div id="legend" class="">
+        <legend class="">second-hand auto price prediction</legend>
+      </div>
+   
+    <div class="control-group">
+          <label class="control-label">make</label>
+          <div class="controls">
+      <!-- Inline Radios -->
+      <label class="radio inline">
+        <input type="radio" value="alfa-romero" name="make" checked="checked">
+        alfa-romero
+      </label>
+      <label class="radio inline">
+        <input type="radio" value="audi" name="make">
+        audi
+      </label>
+      <label class="radio inline">
+        <input type="radio" value="bmw" name="make">
+        bmw
+      </label>
+      <label class="radio inline">
+        <input type="radio" value="chevrolet" name="make">
+        chevrolet
+      </label>
+      <label class="radio inline">
+        <input type="radio" value="dodge" name="make">
+        dodge
+      </label>
+      <label class="radio inline">
+        <input type="radio" value="honda" name="make">
+        honda
+      </label>
+      <label class="radio inline">
+        <input type="radio" value="isuzu" name="make">
+        isuzu
+      </label>
+      <label class="radio inline">
+        <input type="radio" value="jaguar" name="make">
+        jaguar
+      </label>
+      <label class="radio inline">
+        <input type="radio" value="mazda" name="make">
+        mazda
+      </label>
+      <label class="radio inline">
+        <input type="radio" value="mercedes-benz" name="make">
+        mercedes-benz
+      </label>
+      <label class="radio inline">
+        <input type="radio" value="mitsubishi" name="make">
+        mitsubishi
+      </label>
+      <label class="radio inline">
+        <input type="radio" value="nissan" name="make">
+        nissan
+      </label>
+  </div>
+        </div><div class="control-group">
+          <label class="control-label">fuel type</label>
+          <div class="controls">
+      <!-- Inline Radios -->
+      <label class="radio inline">
+        <input type="radio" value="gas" name="fuel-type" checked="checked">
+        gas
+      </label>
+      <label class="radio inline">
+        <input type="radio" value="diesel" name="fuel-type">
+        diesel
+      </label>
+  </div>
+        </div>
+
+    <div class="control-group">
+          <label class="control-label">drive wheels</label>
+          <div class="controls">
+      <!-- Inline Radios -->
+      <label class="radio inline">
+        <input type="radio" value="rwd" name="drive-wheels" checked="checked">
+        rwd
+      </label>
+      <label class="radio inline">
+        <input type="radio" value="fwd" name="drive-wheels">
+        fwd
+      </label>
+      <label class="radio inline">
+        <input type="radio" value="4wd" name="drive-wheels">
+        4wd
+      </label>
+  </div>
+        </div>
+
+    <div class="control-group">
+
+          <!-- Text input-->
+          <label class="control-label" for="input01">engine size</label>
+          <div class="controls">
+            <input type="text" placeholder="50~400" class="input-xlarge" name="engine-size">
+            <p class="help-block"></p>
+          </div>
+        </div>
+
+    <div class="control-group">
+
+          <!-- Text input-->
+          <label class="control-label" for="input01">horse power</label>
+          <div class="controls">
+            <input type="text" placeholder="40~300" class="input-xlarge" name="horse-power">
+            <p class="help-block"></p>
+          </div>
+        </div>
+
+    <div class="control-group">
+
+          <!-- Text input-->
+          <label class="control-label" for="input01">peak rpm</label>
+          <div class="controls">
+            <input type="text" placeholder="4000~7000" class="input-xlarge" name="peak-rpm">
+            <p class="help-block"></p>
+          </div>
+        </div><div class="control-group">
+
+          <!-- Text input-->
+          <label class="control-label" for="input01">length</label>
+          <div class="controls">
+            <input type="text" placeholder="140~200" class="input-xlarge" name="length">
+            <p class="help-block"></p>
+          </div>
+        </div>
+
+    <div class="control-group">
+
+          <!-- Text input-->
+          <label class="control-label" for="input01">width</label>
+          <div class="controls">
+            <input type="text" placeholder="60~75" class="input-xlarge" name="width">
+            <p class="help-block"></p>
+          </div>
+        </div>
+
+    <div class="control-group">
+
+          <!-- Text input-->
+          <label class="control-label" for="input01">height</label>
+          <div class="controls">
+            <input type="text" placeholder="45~60" class="input-xlarge" name="height">
+            <p class="help-block"></p>
+          </div>
+        </div>
+
+    <div class="control-group">
+
+          <!-- Text input-->
+          <label class="control-label" for="input01">wheel base</label>
+          <div class="controls">
+            <input type="text" placeholder="80~120" class="input-xlarge" name="wheel-base">
+            <p class="help-block"></p>
+          </div>
+        </div>
+
+    <div class="control-group">
+          <label class="control-label"></label>
+
+          <!-- Button -->
+          <div class="controls">
+            <button class="btn btn-success" type="submit">submit</button>
+          </div>
+        </div>
+
+    </fieldset>
+  </form>
+
+<div> <h2>predicted price = {{ price }}</h2></div>
+</html>
+
+

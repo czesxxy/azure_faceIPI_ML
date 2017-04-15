@@ -1,0 +1,64 @@
+import urllib2
+import json
+
+def predict(form):
+    print form['make']
+    data = {
+            "Inputs": {
+                    "input1":
+                    [
+                        {
+                                'symboling': "1",   
+                                'normalized-losses': "1",   
+                                'make': form['make'],   
+                                'fuel-type': form['fuel-type'],   
+                                'aspiration': "std",   
+                                'num-of-doors': "d",   
+                                'body-style': "d",   
+                                'drive-wheels': form['drive-wheels'],   
+                                'engine-location': "d",   
+                                'wheel-base': form['wheel-base'],   
+                                'length': form['length'],   
+                                'width': form['width'],   
+                                'height': form['height'],   
+                                'curb-weight': "1",   
+                                'engine-type': "d",   
+                                'num-of-cylinders': "d",   
+                                'engine-size': form['engine-size'],   
+                                'fuel-system': "mpfi",   
+                                'bore': "1",   
+                                'stroke': "1",   
+                                'compression-ratio': "1",   
+                                'horsepower': form['horse-power'],   
+                                'peak-rpm': form['peak-rpm'],   
+                                'city-mpg': "1",   
+                                'highway-mpg': "1",   
+                                'price': "1",   
+                        }
+                    ],
+            },
+        "GlobalParameters":  {
+        }
+    }
+
+    body = str.encode(json.dumps(data))
+
+    url = 'https://ussouthcentral.services.azureml.net/subscriptions/b657933b2aee40ce9d775dcfb71e30eb/services/9ba0944bcdc74e0493e9ef2360f2525b/execute?api-version=2.0&format=swagger'
+    api_key = 'mhQTJpKFymzz2T/mBc/nRRekUmAWaSyjgCYl8Vj4jAcZh8QdJzceqHZ0ezCb8be5WcBMONg1xcXCcp8v5kVU4A==' # Replace this with the API key for the web service
+    headers = {'Content-Type':'application/json', 'Authorization':('Bearer '+ api_key)}
+
+    req = urllib2.Request(url, body, headers)
+
+    try:
+        response = urllib2.urlopen(req)
+
+        result = response.read()
+        result = json.loads(result)
+        result = result['Results']['output1'][0]
+        return result['Scored Labels']
+    except urllib2.HTTPError, error:
+        print("The request failed with status code: " + str(error.code))
+
+        # Print the headers - they include the requert ID and the timestamp, which are useful for debugging the failure
+        print(error.info())
+        print(json.loads(error.read())) 

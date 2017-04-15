@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">  
+	<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+    <h1> Sign Up </h1>
+    <div class="input-group">
+    <span class="input-group-addon" id="basic-addon1">username</span>
+    <input id=username type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+    </div>
+    <video id="video" width="640" height="480" autoplay="" ></video>
+    <button id="shoot" onclick="shoot()"> shoot </button>
+    <canvas id="canvas" width="640" height="480" "> </canvas>
+    <button id="submit" onclick="submit()"> submit </button>
+    <script>
+var video = document.getElementById('video');
+var canvas = document.getElementById('canvas');
+var context = canvas.getContext("2d");
+// Get access to the camera!
+if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    // Not adding `{ audio: true }` since we only want video now
+    navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+        video.src = window.URL.createObjectURL(stream);
+        video.play();
+    });
+}
+
+/* Legacy code below: getUserMedia */
+else if(navigator.getUserMedia) { // Standard
+    navigator.getUserMedia({ video: true }, function(stream) {
+        video.src = stream;
+        video.play();
+    }, errBack);
+} else if(navigator.webkitGetUserMedia) { // WebKit-prefixed
+    navigator.webkitGetUserMedia({ video: true }, function(stream){
+        video.src = window.webkitURL.createObjectURL(stream);
+        video.play();
+    }, errBack);
+} else if(navigator.mozGetUserMedia) { // Mozilla-prefixed
+    navigator.mozGetUserMedia({ video: true }, function(stream){
+        video.src = window.URL.createObjectURL(stream);
+        video.play();
+    }, errBack);
+}
+
+function shoot() {
+    context.drawImage(video, 0, 0, 640, 480);
+}
+
+function submit() {
+    var image = canvas.toDataURL('image/png');
+    var username = document.getElementById('username').value;
+    if (username == '') {
+        alert('username cannot be empty');
+        return;
+    }
+    $.ajax({ 
+        type:'POST',
+        url: "/saveImage", 
+        data: { data: image.substring(22), name: username }, 
+        success:
+			function ()
+			{
+		 	alert('OK');
+			}
+	});
+}
+
+    </script>
+</html>
