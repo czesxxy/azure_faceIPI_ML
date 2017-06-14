@@ -1,8 +1,10 @@
 from app import app
-from flask import render_template, request, Response, redirect, session
+from flask import render_template, request, Response, redirect, session, send_file
 from auto import predict
 import base64
 import face
+from PIL import Image
+import StringIO
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -21,16 +23,15 @@ def select():
     if request.method == 'POST':
         price = predict(request.form)
     else:
-        print 'get'
-    return render_template('select.html', price = price, name = session['name'])
+        return render_template('select.html', price = price, name = session['name'])
 
 @app.route('/saveImage', methods=['GET', 'POST'])
 def saveImage():
     name = request.form['name'];
-    personId = face.createPerson()
+    personId = face.createPerson(name)
     data = base64.decodestring(request.form['data'])
 
-    d = 'images/' + str(personId) +'.png'
+    d = 'app/static/images/' + str(personId) +'.png'
     img = open(d, 'w')
     img.write(data)
     img.close()
@@ -41,7 +42,7 @@ def saveImage():
 @app.route('/checkImage', methods=['GET', 'POST'])
 def checkImage():
     data = base64.decodestring(request.form['data'])
-    d = 'images/tmp.png'
+    d = 'app/static/images/tmp.png'
     img = open(d, 'w')
     img.write(data)
     img.close()
@@ -53,7 +54,6 @@ def checkImage():
 
 @app.route('/image/<personId>')
 def getImage(personId):
-   # personId = '9a900cac-390c-4992-915f-e73473b8b606'
-    image = file('images/' + str(personId) + '.png')
+    image = file('app/static/images/' + str(personId) + '.png')
     res = Response(image, mimetype='image/png')
     return res

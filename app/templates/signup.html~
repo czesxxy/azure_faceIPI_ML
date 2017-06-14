@@ -52,15 +52,15 @@ function shoot() {
 
 function submit() {
     var image = canvas.toDataURL('image/png');
-    var name = document.getElementById('username').value;
-    if (name == '') {
+    var username = document.getElementById('username').value;
+    if (username == '') {
         alert('username cannot be empty');
         return;
     }
     $.ajax({ 
         type:'POST',
         url: "/saveImage", 
-        data: { data: image.substring(22), name: 'xy' }, 
+        data: { data: image.substring(22), name: username }, 
         success:
 			function ()
 			{

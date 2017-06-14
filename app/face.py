@@ -5,8 +5,9 @@ import httplib, urllib, base64, json
 headers = {
     # Request headers
     'Content-Type': 'application/json',
-    'Ocp-Apim-Subscription-Key': 'b5305d275700491eb82c5ff82573eab4'
+    'Ocp-Apim-Subscription-Key': 'a7f1241ed0b34a91a420a16d56dde6c3'
 }
+
 '''
 body = {
     "name":"soa",
@@ -17,7 +18,7 @@ try:
     print 'aa'
     conn = httplib.HTTPSConnection('westus.api.cognitive.microsoft.com')
     print 'bb'
-    conn.request("PUT", "/face/v1.0/persongroups/1", json.dumps(body), headers)
+    conn.request("PUT", "/face/v1.0/persongroups/2", json.dumps(body), headers)
     print 'sent'
     response = conn.getresponse()
     print response
@@ -36,29 +37,27 @@ def createPerson(name):
     }
     try:
         conn = httplib.HTTPSConnection('westus.api.cognitive.microsoft.com')
-        conn.request("POST", "/face/v1.0/persongroups/1/persons", json.dumps(body), headers)
+        conn.request("POST", "/face/v1.0/persongroups/2/persons", json.dumps(body), headers)
         response = conn.getresponse()
         data = response.read()
-        print(data)
         data = json.loads(data)
         conn.close()
-        print data['personId']
         return data['personId']
     except Exception as e:
         print e
 
 def addFace(personId):
+    print "add a person: "
     print personId
     body = {
         "url":"image/" + str(personId) + ".png"
     }
     try:
-        body['url'] = 'http://img1.gtimg.com/ent/pics/hv1/217/14/1910/124201537.png'
+        body['url'] = 'http://183.172.137.163/image/' + personId ;
         conn = httplib.HTTPSConnection('westus.api.cognitive.microsoft.com')
-        conn.request("POST", "/face/v1.0/persongroups/1/persons/%s/persistedFaces?"%personId, json.dumps(body), headers)
+        conn.request("POST", "/face/v1.0/persongroups/2/persons/%s/persistedFaces?"%personId, json.dumps(body), headers)
         response = conn.getresponse()
         data = response.read()
-        print(data)
         conn.close()
     except Exception as e:
         print e
@@ -66,17 +65,15 @@ def addFace(personId):
 def trainGroup():
     try:
         conn = httplib.HTTPSConnection('westus.api.cognitive.microsoft.com')
-        conn.request("POST", "/face/v1.0/persongroups/1/train", '' , headers)
+        conn.request("POST", "/face/v1.0/persongroups/2/train", '' , headers)
         response = conn.getresponse()
         data = response.read()
-        print(data)
         conn.close()
     except Exception as e:
         print e
 
 def detectFace():
-    body = {"url":"image/tmp.png"}
-    body = {"url":'http://img1.gtimg.com/ent/pics/hv1/217/14/1910/124201537.png'}
+    body = {"url":'http://183.172.137.163/image/tmp'}
     params = urllib.urlencode({
         # Request parameters
         'returnFaceId': 'true',
@@ -88,7 +85,6 @@ def detectFace():
         response = conn.getresponse()
         data = response.read()
         data = eval(data)
-        print(data[0]['faceId'])
         conn.close()
         return data[0]['faceId']
     except Exception as e:
@@ -98,7 +94,7 @@ def checkFace():
     faceId = detectFace()
     body = {
         "faceIds":[faceId],
-        "personGroupId":'1',
+        "personGroupId":'2',
         "maxNumOfCandidatesReturned":1,
         "confidenceThreshold":0.4
     }
@@ -112,6 +108,7 @@ def checkFace():
         if len(data[0]['candidates']) == 0:
             return None
         personId = data[0]['candidates'][0]['personId']
+        print "find person Id :"
         print personId
         conn.close()
     except Exception as e:
@@ -121,15 +118,16 @@ def checkFace():
 def getPersonName(personId):
     try:
         conn = httplib.HTTPSConnection('westus.api.cognitive.microsoft.com')
-        conn.request("GET", "/face/v1.0/persongroups/1/persons/%s"%personId, '', headers)
+        conn.request("GET", "/face/v1.0/persongroups/2/persons/%s"%personId, '', headers)
         response = conn.getresponse()
         data = response.read()
         data = eval(data)
+        print data
         name = data['name']
         print(name)
         conn.close()
+        return name
     except Exception as e:
         print e
-
-    return name
+        return ''
 

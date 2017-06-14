@@ -4,6 +4,6 @@ KEY = 'b5305d275700491eb82c5ff82573eab4'  # Replace with a valid subscription ke
 CF.Key.set(KEY)
 
 # You can use this example JPG or replace the URL below with your own URL to a JPEG image.
-img_url = 'https://raw.githubusercontent.com/Microsoft/Cognitive-Face-Windows/master/Data/detection1.jpg'
+img_url = './white_new.jpg'
 result = CF.face.detect(img_url)
 print result
